@@ -1,0 +1,35 @@
+<h1>Aareon Angular Test</h1>
+<form [formGroup]="simpleForm" (ngSubmit)="onSubmit(simpleForm)">
+  <div class="title-field">
+    <label>Title</label>
+    <select *ngIf="titles$ | async as titles" formControlName="title">
+      <option value="undefined">-- Select an option --</option>
+      <option
+        *ngFor="let title of titles"
+        value="{{ title.name }}"
+        [selected]="title.isDefault"
+      >
+        {{ title.name }}
+      </option>
+    </select>
+  </div>
+  <div class="name-field">
+    <label>First name</label>
+    <input formControlName="firstName" type="text" placeholder="First name" />
+  </div>
+  <div class="name-field">
+    <label>Last name</label>
+    <input formControlName="lastName" type="text" placeholder="Last name" />
+  </div>
+  <!-- TODO: add error message -->
+  <span></span>
+  <div class="checkbox-field" #checkbox>
+    <label>
+      <input formControlName="acceptTerms" type="checkbox" />
+      I accept the terms & conditions
+    </label>
+  </div>
+  <div class="submit-wrapper">
+    <button [disabled]="!isSubmitActive">Submit</button>
+  </div>
+</form>
