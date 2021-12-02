@@ -27,3 +27,11 @@ form {
 .submit-wrapper button {
   padding: 5px 15px;
 }
+
+.is-invalid {
+  border: solid 1px red;
+}
+
+span {
+  color: red;
+}

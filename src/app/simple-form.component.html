@@ -1,13 +1,17 @@
 <h1>Aareon Angular Test</h1>
-<form [formGroup]="simpleForm" (ngSubmit)="onSubmit(simpleForm)">
+<form
+  [formGroup]="simpleForm"
+  #ngForm="ngForm"
+  (ngSubmit)="onSubmit(simpleForm)"
+>
   <div class="title-field">
     <label>Title</label>
     <select formControlName="title">
-      <option disabled>-- Select an option --</option>
+      <option>-- Select an option --</option>
       <option
         *ngFor="let title of titles$ | async"
-        value="{{ title.name }}"
-        selected="{{ title.isDefault }}"
+        [value]="title.name"
+        [selected]="title.isDefault"
       >
         {{ title.name }}
       </option>
@@ -19,10 +23,28 @@
   </div>
   <div class="name-field">
     <label>Last name</label>
-    <input formControlName="lastName" type="text" placeholder="Last name" />
+    <input
+      [ngClass]="{
+        'is-invalid':
+          (simpleForm.controls['lastName'].touched &&
+            simpleForm.controls['lastName'].pristine) ||
+          (simpleForm.controls['lastName'].hasError('required') &&
+            ngForm.submitted)
+      }"
+      formControlName="lastName"
+      type="text"
+      placeholder="Last name"
+    />
   </div>
   <!-- TODO: add error message -->
-  <span></span>
+  <span
+    *ngIf="
+      (simpleForm.controls['lastName'].touched &&
+        simpleForm.controls['lastName'].pristine) ||
+      (simpleForm.controls['lastName'].hasError('required') && ngForm.submitted)
+    "
+    >* Last name is mandatory</span
+  >
   <div class="checkbox-field">
     <label>
       <input #checkbox formControlName="acceptTerms" type="checkbox" />
