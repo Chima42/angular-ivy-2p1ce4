@@ -19,6 +19,12 @@ export class SimpleFormComponent implements OnInit {
   constructor(private _titleService: TitleService) {}
 
   ngOnInit() {
+    this.simpleForm = new FormGroup({
+      title: new FormControl(''),
+      firstName: new FormControl(''),
+      lastName: new FormControl('', [Validators.required]),
+      acceptTerms: new FormControl(false),
+    });
     this.titles$ = this._titleService.getTitles().pipe(
       tap((titles) =>
         this.simpleForm.patchValue({
@@ -26,12 +32,6 @@ export class SimpleFormComponent implements OnInit {
         })
       )
     );
-    this.simpleForm = new FormGroup({
-      title: new FormControl(''),
-      firstName: new FormControl(''),
-      lastName: new FormControl('', [Validators.required]),
-      acceptTerms: new FormControl(false),
-    });
   }
 
   public onSubmit(form: FormGroup) {
