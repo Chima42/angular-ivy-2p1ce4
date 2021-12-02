@@ -1,10 +1,8 @@
 import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Title } from './title.model';
 
 export class TitleService {
-  public defaultSelectedTitle = '';
-
   public getTitles(): Observable<Title[]> {
     // assume this data is coming from a backend data source and cannot be changed
     return of([

@@ -12,7 +12,6 @@ import { TitleService } from './title.service';
 export class SimpleFormComponent implements OnInit {
   public titles$: Observable<Title[]>;
   public simpleForm: FormGroup;
-  public isSubmitActive = false;
 
   constructor(private _titleService: TitleService) {}
 
@@ -21,13 +20,9 @@ export class SimpleFormComponent implements OnInit {
       title: new FormControl(''),
       firstName: new FormControl(''),
       lastName: new FormControl(''),
-      acceptTerms: new FormControl(false),
+      acceptTerms: new FormControl(''),
     });
     this.titles$ = this._titleService.getTitles();
-  }
-
-  public toggleButtonStatus() {
-    this.isSubmitActive = !this.isSubmitActive;
   }
 
   public onSubmit(form: FormGroup) {
