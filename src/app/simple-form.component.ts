@@ -14,22 +14,20 @@ export class SimpleFormComponent implements OnInit {
   public titles$: Observable<Title[]>;
   public simpleForm: FormGroup;
   public defaultSelectedOption: Title;
+  private readonly invalidStatus = 'INVALID';
 
   constructor(private _titleService: TitleService) {}
 
   ngOnInit() {
-    this.titles$ = this._titleService
-      .getTitles()
-      .pipe(
-        tap(
-          (titles) =>
-            (this.defaultSelectedOption = titles.filter(
-              (title) => title.isDefault
-            )[0])
-        )
-      );
+    this.titles$ = this._titleService.getTitles().pipe(
+      tap((titles) =>
+        this.simpleForm.patchValue({
+          title: titles.filter((title) => title.isDefault)[0].name,
+        })
+      )
+    );
     this.simpleForm = new FormGroup({
-      title: new FormControl('null'),
+      title: new FormControl(''),
       firstName: new FormControl(''),
       lastName: new FormControl('', [Validators.required]),
       acceptTerms: new FormControl(false),
@@ -37,10 +35,10 @@ export class SimpleFormComponent implements OnInit {
   }
 
   public onSubmit(form: FormGroup) {
-    if (form.status === 'INVALID') {
+    if (form.status === this.invalidStatus) {
       return;
     } else {
-      console.log(form);
+      console.log(form.value);
     }
   }
 }
