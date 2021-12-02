@@ -8,11 +8,7 @@
     <label>Title</label>
     <select formControlName="title">
       <option>-- Select an option --</option>
-      <option
-        *ngFor="let title of titles$ | async"
-        [value]="title.name"
-        [selected]="title.isDefault"
-      >
+      <option *ngFor="let title of titles$ | async" [value]="title.name">
         {{ title.name }}
       </option>
     </select>
